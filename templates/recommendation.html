@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation</title>
+    <style>body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
+
+ .recipe-button {
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .recipe-button:hover {
+            background-color: #45a049;
+        }
+
+</style>
+</head>
+<body>
+    <h1>Recommendation</h1>
+    <div>
+        <h2>Body Mass Index (BMI): {{ bmi }}</h2>
+        <h2>Maintain Calories: {{ calories }}</h2>
+    </div>
+    <div>
+        {% for meal_name, recipe_name, recipe_nutrition in recommendations %}
+            <h3>{{ meal_name }}</h3>
+            {% if recipe_name == "No recipe found matching the calorie range." %}
+                <p>No recipe found matching the calorie range.</p>
+            {% else %}
+                <p>Name: {{ recipe_name }}</p>
+
+                <p>Nutritional Values (g):</p>
+                <table>
+                    <tr>
+                        <th>Calories</th>
+                        <th>FatContent</th>
+                        <th>SaturatedFatContent</th>
+                        <th>CholesterolContent</th>
+                        <th>SodiumContent</th>
+                        <th>CarbohydrateContent</th>
+                        <th>FiberContent</th>
+                        <th>SugarContent</th>
+                        <th>ProteinContent</th>
+                    </tr>
+                    <tr>
+                        {% for key, value in recipe_nutrition.items() %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+
+            {% endif %}
+        {% endfor %}
+    </div>
+     <button class="recipe-button" onclick="redirectToHomepage()">See Recipe</button>
+    </div>
+
+    <script>
+        function redirectToHomepage() {
+            window.location.href = "/recom";
+        }
+    </script>
+</body>
+</html>

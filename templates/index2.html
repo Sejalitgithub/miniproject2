@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommendation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Recipe Recommendation </h1>
+    <form action="/recommend" method="post">
+        <label for="keywords">Enter Food Name:</label>
+        <input type="text" id="keywords" name="keywords" required>
+        <button type="submit">Recommend</button>
+    </form>
+</body>
+</html>

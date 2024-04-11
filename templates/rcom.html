@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <style>
+        .recipe-image {
+            max-width: 200px; /* Set the maximum width of the image */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .hidden {
+            display: none; /* Initially hide the content */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="heading-box">
+        <h1 class="animated-heading">Recommended Recipes</h1>
+    </div>
+    <ul>
+        {% for index, recipe in name_recipes.iterrows() %}
+        <li>
+            <h2>{{ recipe['Name'] }}</h2>
+            <img class="recipe-image" src="{{ recipe['Images'][0] }}" alt="Recipe Image">
+            <button class="show-instructions">Show Instructions</button>
+            <button class="show-ingredients">Show Ingredients</button>
+            <button class="show-time">Show Time</button>
+            <div class="instructions hidden">
+                <h3>Instructions:</h3>
+                <ul>
+                    {% for instruction in recipe['RecipeInstructions'] %}
+                    <li>{{ instruction }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="ingredients hidden">
+                <h3>Ingredients:</h3>
+                <ul>
+                    {% for ingredient in recipe['RecipeIngredientParts'] %}
+                    <li>{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="time hidden">
+                <p><strong>Cook Time:</strong> {{ recipe['CookTime'].replace('PT', '').replace('H', ' hours').replace('M', ' minutes') }}</p>
+                <p><strong>Prep Time:</strong> {{ recipe['PrepTime'].replace('PT', '').replace('H', ' hours').replace('M', ' minutes') }}</p>
+                <p><strong>Total Time:</strong> {{ recipe['TotalTime'].replace('PT', '').replace('H', ' hours').replace('M', ' minutes') }}</p>
+            </div>
+            <hr>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script>
+    document.querySelectorAll('.show-instructions').forEach(button => {
+        button.addEventListener('click', function() {
+            const instructions = this.parentElement.querySelector('.instructions');
+            instructions.classList.toggle('hidden');
+        });
+    });
+
+    document.querySelectorAll('.show-ingredients').forEach(button => {
+        button.addEventListener('click', function() {
+            const ingredients = this.parentElement.querySelector('.ingredients');
+            ingredients.classList.toggle('hidden');
+        });
+    });
+
+    document.querySelectorAll('.show-time').forEach(button => {
+        button.addEventListener('click', function() {
+            const time = this.parentElement.querySelector('.time');
+            time.classList.toggle('hidden');
+        });
+    });
+</script>
+</body>
+</html>
